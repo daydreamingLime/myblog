@@ -1,36 +1,49 @@
-name: Build and Deploy Hugo Blog
+name: Deploy Hugo to GitHub Pages
 
 on:
   push:
     branches:
-      - dev # 你的代码主分支是 dev
+      - dev
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
-  build-and-deploy:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the code
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: true # 确保主题子模块能拉取
+          submodules: true
           fetch-depth: 0
 
-      - name: Install Hugo
+      - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: 'latest'
-          extended: true # 支持扩展版，避免主题编译失败
+          hugo-version: '0.136.0'
+          extended: true
 
-      - name: Build the site
+      - name: Build
         run: hugo --gc --minify --baseURL "https://daydreaminglime.github.io/myblog/"
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          path: ./public
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
