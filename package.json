@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "@tailwindcss/typography": "^0.5.19",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.10",
+    "tailwindcss": "^4.2.4"
+  },
+  "scripts": {
+    "tailwind:build": "npx tailwindcss -i ./themes/void/assets/css/main.css -o ./themes/void/assets/css/style.css",
+    "tailwind:watch": "npx tailwindcss -i ./themes/void/assets/css/main.css -o ./themes/void/assets/css/style.css --watch"
+  }
+}

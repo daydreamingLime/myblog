@@ -1,0 +1,43 @@
+baseURL = "https://daydreaminglime.github.io/rainblog/"
+languageCode = "zh-cn"
+title = 'Rain的博客'
+theme = "void"
+
+[params]
+  [params.social]
+  [params.avatar]
+    # 重点：我把 / 去掉了，让它变成相对路径，logo 100%显示
+    url = "favicon/favicon.svg"
+
+# Main menu
+[[menus.main]]
+name = 'Home'
+pageRef = "/"
+weight = 10
+
+[[menus.main]]
+name = 'Posts'
+pageRef = "posts"
+weight = 20
+
+[[menus.main]]
+name = 'Tags'
+pageRef = "tags"
+weight = 30
+
+[[menus.main]]
+name = 'About'
+pageRef = "about"
+weight = 40
+
+# Table of Contents (recommended)
+[markup]
+  [markup.tableOfContents]
+    startLevel = 1
+    endLevel = 6
+    ordered = false
+
+# Allow raw HTML within Markdown (for KaTeX, etc.)
+[markup.goldmark]
+  [markup.goldmark.renderer]
+    unsafe = true
