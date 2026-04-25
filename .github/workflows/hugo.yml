@@ -1,9 +1,9 @@
-name: Deploy Hugo site to GitHub Pages
+name: Build and Deploy Hugo Blog
 
 on:
   push:
     branches:
-      - dev
+      - dev # 你的代码主分支是 dev
 
 permissions:
   contents: write
@@ -11,22 +11,22 @@ permissions:
   id-token: write
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout the code
         uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: true # 确保主题子模块能拉取
           fetch-depth: 0
 
-      - name: Setup Hugo
+      - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: 'latest'
-          extended: true
+          extended: true # 支持扩展版，避免主题编译失败
 
-      - name: Build site
+      - name: Build the site
         run: hugo --gc --minify --baseURL "https://daydreaminglime.github.io/myblog/"
 
       - name: Deploy to GitHub Pages
